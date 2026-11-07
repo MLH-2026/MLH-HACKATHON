@@ -5,12 +5,12 @@
 | Folder | Contents |
 | --- | --- |
 | `frontend/` | React, TypeScript, Three.js, styles, and Vite configuration. |
-| `backend/` | Backend ownership and planned Node.js API responsibilities. |
+| `backend/` | Node/Express coaching API, Gemini integration, tests, and API contract. |
 | `AI/` | Gemini documentation and integration checklist. |
 | `desktop-integration/` | Electron and screen-capture integration responsibilities. |
 | `MLH_Hackathon_Resources/` | Shared event notes, project brief, build plan, and demo script. |
 
-The root package uses npm workspaces. Run installation and development commands from the repository root. The frontend is the implemented workspace today. Backend and desktop code can be added to their folders as those components are built.
+The root package uses npm workspaces for the frontend. The Node backend runs separately with `npm --prefix backend start`; see [backend setup](backend/README.md) and the [frontend API contract](backend/API.md). Desktop integration remains in its own folder.
 
 ## Sidekick frontend
 
@@ -77,11 +77,11 @@ The intended MVP flow is:
 
 The goal is to guide the user rather than immediately take over and provide a complete solution.
 
-## Suggested technology
+## Technology
 
 - **Desktop app:** Electron
 - **UI:** React
-- **Backend:** Node.js
+- **Backend:** Node.js + Express (see [setup and run instructions](backend/README.md))
 - **AI:** Google Gemini API with image input
 
 Keep the Gemini API key on the backend. Do not bundle it into the desktop client.
