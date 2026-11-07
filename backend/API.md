@@ -248,3 +248,9 @@ await fetch(`${API}/session/${session_id}`, { method: 'DELETE' });
 ```
 
 Do not manually set `Content-Type` for `FormData`: the browser supplies the multipart boundary. Disable the hint buttons while a request is pending. No API key is sent by the frontend. These examples are integration snippets; the existing scripted playground is not wired to this API automatically.
+
+## Optional context and one-click nudges
+
+The multipart context field accepts up to 12,000 characters of supporting material. The backend treats it as task data and includes it in the Gemini request. It is optional on every action.
+
+For check_again, restart_ladder=true resets the response level to one while retaining previous screenshots and interaction context. Omitting it preserves existing behavior. It is rejected on other actions.

@@ -31,9 +31,9 @@ For deployment, set `VITE_API_BASE_URL` in `frontend/.env.local` before building
 
 Each function accepts an optional second argument with an AbortSignal. The browser supplies the multipart Content-Type header and boundary.
 
-The desktop Get help workspace provides a local live preview, project overview and task fields, and three explicitly requested help levels. Draft context supports Undo/Redo and Cancel. Back/forward controls revisit saved replies without extra API calls.
+The desktop popup opens with overview and goal entry, then shrinks to a draggable corner control. Each Nudge me click captures current work and requests level one. Suggested fix and Full explanation progress through levels two and three. Previous/Next revisits earlier replies. Context drafts support Undo/Redo and Cancel.
 
-Updating saved context resets the same session with its new goal. Starting a new problem requires confirmation and deletes the old session. The browser version retains image input for testing and fallback use.
+Optional PDF, PPTX, DOCX, text, and code files are converted to text locally using pdfjs-dist and fflate. Context is limited to 12,000 characters per request. Image-only documents need a pasted summary. The browser retains an image upload fallback.
 
 Responses are validated against the supplied session and hint schemas. Backend error messages appear in the interface. Expired sessions return the form to session creation. The separate playground remains available as a scripted example.
 

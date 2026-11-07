@@ -473,3 +473,39 @@ test('disconnecting a client does not bypass the limit on unfinished Gemini work
   await new Promise(resolve => setImmediate(resolve));
   assert.equal((await api.request('/health')).status, 200);
 });
+
+test('one-click nudge restarts at level one while retaining the previous attempt', async t => {
+  const api = await start(t);
+  const id = await api.session('Explain my biology presentation');
+  await api.hint(id, 'initial', WHITE);
+  await api.hint(id, 'more_hint');
+  await api.hint(id, 'more_hint');
+  const form = new FormData();
+  form.set('session_id', id);
+  form.set('action', 'check_again');
+  form.set('restart_ladder', 'true');
+  form.set('context', 'Lecture notes about cellular respiration.');
+  form.set('screenshot', new Blob([BLACK], { type: 'image/png' }), 'work.png');
+  const response = await api.request('/hint', { method: 'POST', body: form });
+  assert.equal(response.status, 200);
+  assert.equal(response.body.hint_level, 1);
+  const request = api.gateway.requests.at(-1);
+  assert.equal(request.supportingContext, 'Lecture notes about cellular respiration.');
+  assert.deepEqual(request.previousScreenshot.data, WHITE);
+  assert.ok(request.history.length > 0);
+  assert.equal((await api.hint(id, 'more_hint')).body.hint_level, 2);
+});
+
+test('supporting context is bounded and restart flags cannot modify other actions', async t => {
+  const api = await start(t);
+  const id = await api.session();
+  for (const [name, value] of [['context', 'x'.repeat(12001)], ['restart_ladder', 'true']]) {
+    const form = new FormData();
+    form.set('session_id', id);
+    form.set('action', 'initial');
+    form.set(name, value);
+    form.set('screenshot', new Blob([WHITE], { type: 'image/png' }), 'work.png');
+    error(await api.request('/hint', { method: 'POST', body: form }), 422);
+  }
+  assert.equal(api.gateway.requests.length, 0);
+});

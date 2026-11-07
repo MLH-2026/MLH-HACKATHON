@@ -42,6 +42,7 @@ export class GeminiGateway {
   async generate(request) {
     const context = {
       learning_goal: request.goal,
+      supporting_context: request.supportingContext || null,
       action: request.action,
       requested_hint_level: request.hintLevel,
       question: request.question ?? null,

@@ -29,7 +29,9 @@ function hintValues(fields) {
   if (fields.question !== undefined && (typeof fields.question !== 'string' || fields.question.trim().length > 2000)) {
     invalid('question must be a string of at most 2000 characters.');
   }
-  return { sessionId: fields.session_id.trim(), action: fields.action, question: fields.question?.trim() || null };
+  if (fields.context !== undefined && (typeof fields.context !== 'string' || fields.context.length > 12000)) invalid('context must be at most 12000 characters.');
+  if (fields.restart_ladder !== undefined && (fields.restart_ladder !== 'true' || fields.action !== 'check_again')) invalid('restart_ladder is only supported as true for check_again.');
+  return { context: fields.context || '', restartLadder: fields.restart_ladder === 'true', sessionId: fields.session_id.trim(), action: fields.action, question: fields.question?.trim() || null };
 }
 
 export function createApp({ config = loadConfig(), gateway, buildTutoringInstructions } = {}) {
@@ -106,7 +108,7 @@ export function createApp({ config = loadConfig(), gateway, buildTutoringInstruc
     res.locals.beginWork();
     try {
       const { fields, screenshot: file } = await parseHintForm(req, config);
-      const { sessionId, action, question } = hintValues(fields);
+      const { sessionId, action, question, context, restartLadder } = hintValues(fields);
       if (action !== 'more_hint' && !file) {
         throw new ApiError(422, 'screenshot_required', 'This action requires a fresh screenshot upload.');
       }
@@ -122,9 +124,9 @@ export function createApp({ config = loadConfig(), gateway, buildTutoringInstruc
           throw new ApiError(409, 'problem_not_started', 'Start with initial and a screenshot first.');
         }
         const image = file ? await validateImage(file, config) : session.screenshot;
-        const targetLevel = action === 'initial' ? 1 : action === 'more_hint' ? Math.min(session.hintLevel + 1, 3) : session.hintLevel;
+        const targetLevel = (action === 'initial' || restartLadder) ? 1 : action === 'more_hint' ? Math.min(session.hintLevel + 1, 3) : session.hintLevel;
         const guidance = validateGuidance(await gateway.generate({
-          goal: session.goal, action, hintLevel: targetLevel, question,
+          goal: session.goal, action, hintLevel: targetLevel, question, supportingContext: context,
           problemContext: JSON.stringify({ initial_question: session.problemQuestion, latest_observation: session.observation }),
           history: session.history.map(item => ({ ...item })), screenshot: image,
           previousScreenshot: action === 'check_again' ? session.screenshot : null,
