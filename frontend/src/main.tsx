@@ -2,6 +2,7 @@ import { StrictMode, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Orb } from './Orb';
 import { Header } from './Header';
+import { Session } from './Session';
 import './styles.css';
 
 const hints = [
@@ -91,6 +92,7 @@ function App() {
           </div>
           <Orb />
         </section>
+        <Session />
         <Playground />
       </main>
       <footer className="wrap footer"><span>✦ &nbsp; WHAT NOW</span><span>MLH HACKATHON PROTOTYPE</span></footer>

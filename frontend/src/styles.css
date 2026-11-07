@@ -208,3 +208,17 @@ h2 { font-size: clamp(2.2rem, 5vw, 4rem); letter-spacing: -.05em; word-spacing: 
   .header-actions { gap: 6px; }
   .header-cta { padding-inline: 10px; gap: 7px; }
 }
+
+#session { scroll-margin-top: 100px; }
+.session-form { padding: 20px; }
+.session-form fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
+.session-form label { display: block; margin-bottom: 8px; font-size: 14px; font-weight: 600; }
+.session-form textarea { width: 100%; min-height: 84px; resize: vertical; padding: 12px; margin-bottom: 20px; border: 1px solid var(--line); border-radius: 8px; font: inherit; background: var(--bg); color: var(--paper); }
+.session-form input[type=file] { display: block; width: 100%; font: inherit; font-size: 13px; }
+.session-form input::file-selector-button { padding: 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--paper); cursor: pointer; }
+.session-form .button { margin: 8px 8px 4px 0; }
+.screenshot-preview { display: block; max-width: 100%; max-height: 240px; object-fit: contain; margin-top: 16px; border-radius: 8px; }
+.upload-note { font-size: 12px; color: var(--muted); }
+.context-question { padding: 12px; border-left: 2px solid var(--lime); }
+.session-error { padding: 14px; border: 1px solid #9a5555; border-radius: 8px; color: #ffc0b9; }
+button:disabled { cursor: not-allowed; opacity: .5; transform: none; }

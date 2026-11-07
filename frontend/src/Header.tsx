@@ -24,7 +24,7 @@ export function Header() {
           <span>what now<span className="period">.</span></span>
         </a>
         <div className="header-actions">
-          <a className="button primary header-cta" href="#playground" onClick={() => setMenuOpen(false)}>
+          <a className="button primary header-cta" href="#session" onClick={() => setMenuOpen(false)}>
             Try it <span aria-hidden="true">↗</span>
           </a>
           <button
@@ -41,6 +41,7 @@ export function Header() {
         </div>
         <nav id="primary-navigation" className={`main-nav ${menuOpen ? 'is-open' : ''}`} aria-label="Main navigation">
           <a className="nav-link" href="#home" onClick={() => setMenuOpen(false)}>Home</a>
+          <a className="nav-link" href="#session" onClick={() => setMenuOpen(false)}>Get help</a>
           <a className="nav-link" href="#playground" onClick={() => setMenuOpen(false)}>Playground</a>
           <a className="nav-link repo-link" href="https://github.com/MLH-2026/MLH-HACKATHON">
             GitHub <span aria-hidden="true">↗</span>

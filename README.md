@@ -45,7 +45,7 @@ npm run build
 npm run preview
 ```
 
-The production files are generated in `frontend/dist/`. The playground simulates one Python exercise in the browser and uses scripted hints. It needs no API key or Python installation.
+The production files are generated in `frontend/dist/`. The playground simulates one Python exercise in the browser and uses scripted hints. The Get help section connects to the local Python backend for live guidance. See [backend connection setup](frontend/README.md#backend-requests).
 
 A starter resource pack for **Fall Hacks 2026** and the **What Now** project.
 

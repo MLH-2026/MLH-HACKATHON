@@ -10,7 +10,15 @@ Run `npm ci` and `npm run dev` from the repository root. Root commands forward t
 
 ## Backend requests
 
-Copy `frontend/.env.example` to `frontend/.env.local` and set `VITE_API_BASE_URL` to the backend origin. Restart Vite after changing the value. An empty value sends requests to the frontend origin. The backend must allow the frontend origin through CORS when they differ.
+Development requests go through Vite's `/api` proxy to `http://127.0.0.1:8000`. Run the Python backend on the same machine as Vite. With the backend implementation and dependencies available, start it from the repo root.
+
+```bash
+backend/.venv/bin/python -m uvicorn app.main:app --app-dir backend --host 127.0.0.1 --port 8000
+```
+
+The backend requires `GEMINI_API_KEY` for hints. Configure that key in the backend environment.
+
+For deployment, set `VITE_API_BASE_URL` in `frontend/.env.local` before building, or configure a production `/api` reverse proxy. An absolute backend URL requires the backend to allow your frontend origin through CORS. Restart Vite after environment changes.
 
 `src/api.ts` exports these request functions.
 
@@ -21,4 +29,8 @@ Copy `frontend/.env.example` to `frontend/.env.local` and set `VITE_API_BASE_URL
 
 Each function accepts an optional second argument with an AbortSignal. The browser supplies the multipart Content-Type header and boundary.
 
-Response bodies are typed as `unknown` until the backend response schema is available. These request functions are ready for integration. The playground currently displays its scripted exercise.
+The Get help section creates a session from the goal, accepts PNG/JPEG/WebP screenshot uploads, and displays the observation, message, hint level, and any clarification question. More hint sends no image. Check again requires a newly selected screenshot after each successful hint. Start a new problem awaits reset before allowing a new goal and session.
+
+Responses are validated against the supplied session and hint schemas. Backend error messages appear in the interface. Expired sessions return the form to session creation. The separate playground remains available as a scripted example.
+
+The Python endpoint implementation was supplied as a contract and is currently on a teammate's machine. This checkout requires that backend to be installed or made available separately for live guidance.
