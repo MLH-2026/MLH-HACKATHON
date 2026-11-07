@@ -19,10 +19,10 @@ const flows: Record<Mode, { title: string; verdict: string; steps: Array<[string
     title: 'Using WhatNow',
     verdict: 'You stay in flow, and you do the thinking.',
     steps: [
-      ['Click once', 'A floating button sits on top of your editor. Nothing is captured until you press it.'],
-      ['Pick what to share', 'Choose a screen or window, preview it, then send. You stay in control.'],
-      ['Get one nudge', 'A single guiding question first. Hints only get more specific when you ask.'],
-      ['Try it, then Check again', 'Fix it yourself, share the new screen, and get feedback on your attempt.'],
+      ['Click once', 'A floating button sits on top of your work. Nothing is captured until you press it.'],
+      ['Capture only when you ask', 'WhatNow captures your screen only when you press Nudge me, and nothing is saved.'],
+      ['Get one nudge', 'One small nudge first. Hints only get more specific when you ask.'],
+      ['Try it, then Check again', 'Make the change yourself, share the new screen, and get feedback on your attempt.'],
       ['Keep your goal', 'Your goal stays attached to the session, so every hint stays on target.'],
     ],
   },
@@ -31,7 +31,7 @@ const flows: Record<Mode, { title: string; verdict: string; steps: Array<[string
 const reasons = [
   { icon: '🧠', title: 'Built for learning, not answers', body: 'General chatbots are tuned to be helpful by solving things. WhatNow is tuned to make you better, so it guides first and only explains deeper when you ask.' },
   { icon: '✍️', title: 'No prompt-writing', body: 'You never craft “act as a patient tutor who…” again. The coaching style, the goal, and the hint rules are already built in.' },
-  { icon: '👀', title: 'It sees what you see', body: 'Share a screen or window with one click instead of describing your code, copying errors, and hoping you included the right line.' },
+  { icon: '👀', title: 'It sees what you see', body: 'One click captures your screen instead of you describing your work, copying errors, and hoping you included the right part.' },
   { icon: '🪜', title: 'A hint ladder you control', body: 'Question, then hint, then explanation. You choose how much help you want, so you never spoil the puzzle for yourself.' },
   { icon: '🔁', title: 'Check again loop', body: 'Made a change? Share the updated screen and get feedback on that attempt. It feels like pairing, not searching.' },
   { icon: '🔒', title: 'Privacy by design', body: 'Capture only happens when you click. Screenshots are not saved by default, nothing is sent in the background, and the API key stays on the backend.' },
@@ -42,8 +42,8 @@ const rows: Array<[string, string, string]> = [
   ['Default response', 'Often the full solution', 'A guiding question first'],
   ['Remembers your goal', 'Only inside one chat thread', 'Yes, for the whole session'],
   ['Checks your next attempt', 'You re-upload and re-explain', 'Check again, built in'],
-  ['Where it lives', 'A browser tab', 'Floating over your editor'],
-  ['Best for', 'Anything, in general', 'Learning to code without being handed the answer'],
+  ['Where it lives', 'A browser tab', 'Floating over your work'],
+  ['Best for', 'Anything, in general', 'Learning without being handed the answer'],
 ];
 
 export function WhyWhatNow() {
@@ -116,7 +116,7 @@ export function WhyWhatNow() {
           </table>
         </div>
         <p className="honest-note">
-          <strong>Being honest:</strong> if you just need a quick answer or a full solution, a general chatbot is perfectly fine. WhatNow is for the moments when you want to understand your code and not only make the error go away.
+          <strong>Being honest:</strong> if you just need a quick answer or a full solution, a general chatbot is perfectly fine. WhatNow is for the moments when you want to understand your work and not only make the problem go away.
         </p>
       </Reveal>
     </section>

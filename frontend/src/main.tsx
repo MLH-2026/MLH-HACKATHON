@@ -5,9 +5,14 @@ import { Header } from './Header';
 import { Session } from './Session';
 import { Playground } from './Playground';
 import { WhyWhatNow } from './WhyWhatNow';
+import { Reveal } from './Reveal';
 import './styles.css';
 
 function App() {
+  // The Electron window shows only the workspace, without the marketing page.
+  if (window.whatNowDesktop) {
+    return <main className="desktop-shell"><Session /></main>;
+  }
   return (
     <>
       <Header />
@@ -16,7 +21,7 @@ function App() {
           <div className="intro">
             <div className="eyebrow"><span className="signal" /> YOUR CODING COMPANION</div>
             <h1 id="welcome">Find your<br /><em>next move.</em></h1>
-            <p>Stuck on a line of code? Get a small, timely hint that helps you work through it yourself.</p>
+            <p>Stuck on code, a draft, or a problem set? Get a small, timely hint that helps you work through it yourself.</p>
             <div className="cta-row">
               <a className="button primary" href="#session">Get unstuck <span aria-hidden="true">↗</span></a>
               <a className="button secondary" href="#playground">Try the demo</a>
@@ -31,7 +36,7 @@ function App() {
           <Orb />
         </section>
         <WhyWhatNow />
-        <Session />
+        <Reveal><Session /></Reveal>
         <Playground />
       </main>
       <footer className="wrap footer"><span>✦ &nbsp; WhatNow</span><span>MLH HACKATHON PROTOTYPE</span></footer>
