@@ -84,7 +84,7 @@ export function Header() {
               {label}
             </a>
           ))}
-          <a className="nav-link repo-link" href="https://github.com/MLH-2026/MLH-HACKATHON">
+          <a className="nav-link repo-link" href="https://github.com/Aly-Baranek/MLH-HACKATHON" target="_blank" rel="noopener noreferrer">
             GitHub <span aria-hidden="true">↗</span>
           </a>
         </nav>

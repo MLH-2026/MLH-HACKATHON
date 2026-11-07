@@ -10,7 +10,7 @@ const dist = path.resolve(__dirname, '../frontend/dist');
 
 function secureWindow(window) {
   window.webContents.setWindowOpenHandler(({ url }) => {
-    if (url === 'https://github.com/MLH-2026/MLH-HACKATHON') void shell.openExternal(url);
+    if (url === 'https://github.com/Aly-Baranek/MLH-HACKATHON') void shell.openExternal(url);
     return { action: 'deny' };
   });
   window.webContents.on('will-navigate', event => event.preventDefault());
