@@ -1,8 +1,45 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+
+const sections = [
+  { id: 'home', label: 'Home' },
+  { id: 'session', label: 'Get help' },
+  { id: 'playground', label: 'Playground' },
+];
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const toggle = useRef<HTMLButtonElement>(null);
+  const [activeSection, setActiveSection] = useState('home');
+
+  useEffect(() => {
+    let frame = 0;
+    const update = () => {
+      const offset = (document.querySelector('.site-header')?.getBoundingClientRect().height ?? 84) + 32;
+      let current = 'home';
+      for (const { id } of sections) {
+        const section = document.getElementById(id);
+        if (section && section.getBoundingClientRect().top <= offset) current = id;
+      }
+      if (window.scrollY > 0 && window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) {
+        current = 'playground';
+      }
+      setActiveSection(current);
+    };
+    const schedule = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+    window.addEventListener('hashchange', schedule);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', schedule);
+      window.removeEventListener('resize', schedule);
+      window.removeEventListener('hashchange', schedule);
+    };
+  }, []);
 
   return (
     <header
@@ -40,9 +77,13 @@ export function Header() {
           </button>
         </div>
         <nav id="primary-navigation" className={`main-nav ${menuOpen ? 'is-open' : ''}`} aria-label="Main navigation">
-          <a className="nav-link" href="#home" onClick={() => setMenuOpen(false)}>Home</a>
-          <a className="nav-link" href="#session" onClick={() => setMenuOpen(false)}>Get help</a>
-          <a className="nav-link" href="#playground" onClick={() => setMenuOpen(false)}>Playground</a>
+          {sections.map(({ id, label }) => (
+            <a key={id} className="nav-link" href={`#${id}`}
+              aria-current={activeSection === id ? 'location' : undefined}
+              onClick={() => { setActiveSection(id); setMenuOpen(false); }}>
+              {label}
+            </a>
+          ))}
           <a className="nav-link repo-link" href="https://github.com/MLH-2026/MLH-HACKATHON">
             GitHub <span aria-hidden="true">↗</span>
           </a>
