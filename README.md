@@ -12,9 +12,9 @@
 
 The root package uses npm workspaces for the frontend. The Node backend runs separately with `npm --prefix backend start`; see [backend setup](backend/README.md) and the [frontend API contract](backend/API.md). Desktop integration remains in its own folder.
 
-## What Now frontend
+## WhatNow frontend
 
-What Now is a beginner coding companion for the MLH hackathon. The welcome screen includes a draggable 3D crystal and an interactive Python debugging exercise. Change the loop bound, check your attempt, and reveal a guiding question, a hint, or a concept explanation as needed.
+WhatNow is a beginner coding companion for the MLH hackathon. The welcome screen includes a draggable 3D crystal and an interactive Python debugging exercise. Change the loop bound, check your attempt, and reveal a guiding question, a hint, or a concept explanation as needed.
 
 ### Run locally
 
@@ -56,15 +56,15 @@ npm run preview
 
 The production files are generated in `frontend/dist/`. The playground simulates one Python exercise in the browser and uses scripted hints. The Get help section connects to the local Node/Express backend for live guidance. See [backend connection setup](frontend/README.md#backend-requests).
 
-A starter resource pack for **Fall Hacks 2026** and the **What Now** project.
+A starter resource pack for **Fall Hacks 2026** and the **WhatNow** project.
 
-> **What Now:** Your work. Your thinking. What Now.
+> **WhatNow:** Your work. Your thinking. WhatNow.
 
 ## Contents
 
 - `MLH_Hackathon_Resources/01_Event_Info/` — event notes and organizer-resource links
 - `AI/gemini/` — official Gemini API documentation and an integration checklist
-- `MLH_Hackathon_Resources/03_Project_What_Now/` — project brief, MVP scope, build plan, privacy principles, and demo outline
+- `MLH_Hackathon_Resources/03_Project_WhatNow/` — project brief, MVP scope, build plan, privacy principles, and demo outline
 
 ## Event overview
 
@@ -72,16 +72,16 @@ The event theme discussed in this project is **Digital Side-kick**.
 
 The event notes in `MLH_Hackathon_Resources/01_Event_Info/event_notes.md` summarize details from the opening-ceremony material shared in this chat. Please confirm deadlines, team rules, and submission requirements against the latest official event instructions before relying on them.
 
-## Project overview: What Now
+## Project overview: WhatNow
 
-What Now is an always-available desktop companion designed to help beginner programmers get unstuck while still learning.
+WhatNow is an always-available desktop companion designed to help beginner programmers get unstuck while still learning.
 
 The intended MVP flow is:
 
-1. The user clicks the floating What Now button.
+1. The user clicks the floating WhatNow button.
 2. The user explicitly approves or initiates a screen capture.
-3. What Now sends the selected screenshot for Gemini-powered analysis.
-4. What Now offers progressive help: a guiding question, a more specific hint, and a deeper explanation.
+3. WhatNow sends the selected screenshot for Gemini-powered analysis.
+4. WhatNow offers progressive help: a guiding question, a more specific hint, and a deeper explanation.
 5. The user makes an attempt and selects **Check again** for feedback on the updated screen.
 
 The goal is to guide the user rather than immediately take over and provide a complete solution.

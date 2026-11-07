@@ -1,4 +1,4 @@
-# Sidekick API
+# WhatNow API
 
 Local base URL: `http://127.0.0.1:8000`. JSON uses UTF-8. Session IDs are opaque strings. Successful guidance responses always contain all five fields below; `context_question` is explicitly `null` when clarification is unnecessary.
 

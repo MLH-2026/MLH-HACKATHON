@@ -1,4 +1,4 @@
-# Gemini integration checklist for What Now
+# Gemini integration checklist for WhatNow
 
 - [ ] Create / select a Google AI Studio project and obtain a Gemini API key.
 - [ ] Keep the key in a server-side environment variable (never bundle it in the Electron renderer).

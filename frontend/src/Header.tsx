@@ -19,9 +19,9 @@ export function Header() {
     >
       <a className="skip-link" href="#main">Skip to content</a>
       <div className="wrap top">
-        <a className="brand" href="#home" aria-label="What Now home" onClick={() => setMenuOpen(false)}>
+        <a className="brand" href="#home" aria-label="WhatNow home" onClick={() => setMenuOpen(false)}>
           <span className="mark" aria-hidden="true">✦</span>
-          <span>what now<span className="period">.</span></span>
+          <span>WhatNow<span className="period">.</span></span>
         </a>
         <div className="header-actions">
           <a className="button primary header-cta" href="#session" onClick={() => setMenuOpen(false)}>

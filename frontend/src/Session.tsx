@@ -123,7 +123,7 @@ export function Session() {
           </fieldset>
         </form>
         <div className="coach">
-          <div className="panel-bar"><span>✦ &nbsp; What Now</span><span>{hint ? `HINT ${hint.hint_level} / 3` : 'YOUR SESSION'}</span></div>
+          <div className="panel-bar"><span>✦ &nbsp; WhatNow</span><span>{hint ? `HINT ${hint.hint_level} / 3` : 'YOUR SESSION'}</span></div>
           <div className="response" role="status">
             {hint ? <>
               <h3>{hint.message}</h3>

@@ -7,7 +7,7 @@ import { loadConfig } from '../src/config.js';
 import { loadTutoringInstructions } from '../src/prompt-loader.js';
 
 test('optional AI teammate module loads from a trusted file and receives action/level', async t => {
-  const directory = await mkdtemp(join(tmpdir(), 'sidekick-prompt-test-'));
+  const directory = await mkdtemp(join(tmpdir(), 'whatnow-prompt-test-'));
   t.after(() => rm(directory, { recursive: true, force: true }));
   const path = join(directory, 'tutoring.mjs');
   await writeFile(path, 'export function buildTutoringInstructions({ action, hintLevel }) { return `${action}: level ${hintLevel}`; }');
@@ -17,7 +17,7 @@ test('optional AI teammate module loads from a trusted file and receives action/
 });
 
 test('AI module with the wrong export is rejected at startup', async t => {
-  const directory = await mkdtemp(join(tmpdir(), 'sidekick-prompt-test-'));
+  const directory = await mkdtemp(join(tmpdir(), 'whatnow-prompt-test-'));
   t.after(() => rm(directory, { recursive: true, force: true }));
   const path = join(directory, 'wrong.mjs');
   await writeFile(path, 'export const prompt = "unexpected export";');

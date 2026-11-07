@@ -1,4 +1,4 @@
-# What Now — build plan
+# WhatNow — build plan
 
 ## Milestone 1: prove the technical path
 - Create a minimal Electron app.
