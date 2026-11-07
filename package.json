@@ -3,12 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "workspaces": [
-    "frontend"
+    "frontend",
+    "desktop-integration"
   ],
   "engines": {
     "node": "^20.19.0 || >=22.12.0"
   },
   "scripts": {
+    "desktop": "npm run build && npm start --workspace=@what-now/desktop",
     "dev": "npm run dev --workspace=@whatnow/frontend",
     "typecheck": "npm run typecheck --workspace=@whatnow/frontend",
     "build": "npm run build --workspace=@whatnow/frontend",

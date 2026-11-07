@@ -11,6 +11,10 @@
   background: var(--bg);
 }
 
+.capture-picker { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-block: 12px; }
+.capture-picker button { background: #182023; color: var(--paper); border: 1px solid var(--line); padding: 8px; border-radius: 8px; overflow-wrap: anywhere; }
+.capture-picker img { width: 100%; height: 100px; object-fit: contain; display: block; }
+
 * { box-sizing: border-box; }
 body { margin: 0; }
 a { color: inherit; text-decoration: none; }

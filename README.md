@@ -7,10 +7,10 @@
 | `frontend/` | React, TypeScript, Three.js, styles, and Vite configuration. |
 | `backend/` | Node/Express coaching API, Gemini integration, tests, and API contract. |
 | `AI/` | Gemini documentation and integration checklist. |
-| `desktop-integration/` | Electron and screen-capture integration responsibilities. |
+| `desktop-integration/` | Electron floating control, preload bridges, and user-triggered screen/window capture. |
 | `MLH_Hackathon_Resources/` | Shared event notes, project brief, build plan, and demo script. |
 
-The root package uses npm workspaces for the frontend. The Node backend runs separately with `npm --prefix backend start`; see [backend setup](backend/README.md) and the [frontend API contract](backend/API.md). Desktop integration remains in its own folder.
+The root package uses npm workspaces for frontend and desktop. The Node backend runs separately with `npm --prefix backend start`; see [backend setup](backend/README.md) and the [frontend API contract](backend/API.md). Run `npm run desktop` to build and launch Electron; see [desktop setup](desktop-integration/README.md) for capture permissions and usage.
 
 ## WhatNow frontend
 
