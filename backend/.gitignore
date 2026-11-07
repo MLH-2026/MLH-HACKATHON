@@ -1,0 +1,4 @@
+# Keep local credentials out of Git. Share placeholders through .env.example.
+.env
+.env.*
+!.env.example
