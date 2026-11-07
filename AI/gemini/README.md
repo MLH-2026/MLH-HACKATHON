@@ -40,3 +40,27 @@ Use the backend API with a real screenshot and configured key. Check:
 | Embedded request to ignore rules | Treat as task data and retain the JSON/coaching rules. |
 
 Record model and scenario outcomes without storing credentials or private screenshots.
+
+## Repeatable live checks
+
+From the repository root, run `node AI/gemini/evaluate.mjs` after configuring
+`backend/.env`. This makes up to nine billable Gemini calls, sequentially, and
+stops on the first provider error. It uses generated, readable PNG screenshots
+rather than personal screen content, and the production backend Gemini gateway,
+baseline policy, schema, and validator with this tutor module enabled.
+
+The ignored `evaluation-results.local.json` records the model, timestamp, and
+responses. Review each response against the scenario table above: valid JSON
+alone does not prove teaching quality. Check level 3 explains the concept without
+revealing the exact fix, repeated hints add an angle, and edited-but-unrun code
+is not described as successfully executed. Rerun after changing prompts.
+
+For integration, the backend teammate only needs the module setting above.
+No public API changes are required. A final desktop/frontend demo remains a team
+check; synthetic images do not establish real capture readability or UI behavior.
+
+The runner resumes successful scenarios from its local report and rebuilds hint
+history without repeating those API calls. Every new result is saved immediately.
+Run the same command after a timeout to retry the failed scenario and continue.
+To evaluate changed prompts or start from scratch, move the local report aside
+first. Reports from a different model are rejected rather than mixed.

@@ -1,11 +1,19 @@
-# Gemini integration checklist for What Now
+# AI integration status
 
-- [ ] Create / select a Google AI Studio project and obtain a Gemini API key.
-- [ ] Keep the key in a server-side environment variable (never bundle it in the Electron renderer).
-- [ ] Build a backend endpoint that accepts a user-approved screenshot and a short context prompt.
-- [ ] Send the screenshot as image input using the current official SDK/API pattern.
-- [ ] Ask Gemini for a concise explanation and a three-level hint ladder.
-- [ ] Use structured output where practical so the UI can reliably render `guiding_question`, `hint`, `deeper_explanation`, and `next_step`.
-- [ ] Handle API errors, timeouts, rate limits, and empty/unclear screenshots gracefully.
-- [ ] Avoid logging screenshots or sensitive screen contents.
-- [ ] Verify current model IDs and image-input limits in the official documentation.
+- [x] Synchronous `buildTutoringInstructions({ action, hintLevel })` module.
+- [x] Three levels: guiding question, focused hint, concept explanation and diagnostic step.
+- [x] Initial help, history-aware hints, and previous/current screenshot comparison.
+- [x] Evidence limits, clarification, correct-work handling, and embedded instruction resistance.
+- [x] Four-field JSON response matching the backend validator.
+- [x] Backend loader contract checks for all nine action/level combinations.
+- [x] Repeatable opt-in synthetic screenshot evaluation via production GeminiGateway.
+- [ ] Review successful live responses against the README rubric.
+- [ ] Team demo with the desktop teammate's capture flow and frontend rendering.
+
+Backend owns transport, validation, sessions, timeouts, and hint progression.
+Frontend owns rendering; desktop owns user-approved capture. No parallel AI endpoint
+or alternate response schema is needed. The backend adds `hint_level`.
+
+Private backend configuration:
+`TUTORING_PROMPT_MODULE=../AI/gemini/tutoring.mjs` and `GEMINI_API_KEY`.
+Keep the key server-side. Never commit `.env`.
