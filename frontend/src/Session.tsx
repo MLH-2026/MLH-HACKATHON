@@ -11,6 +11,7 @@ export function Session() {
   const [hint, setHint] = useState<HintResponse | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
+  const [sources, setSources] = useState<Array<{ id: string; name: string; image: string }>>([]);
   const fileInput = useRef<HTMLInputElement>(null);
   const pending = useRef(false);
   const controller = useRef<AbortController | null>(null);
@@ -94,7 +95,27 @@ export function Session() {
               <label htmlFor="question">{hint?.needs_more_context ? 'Add the missing context' : 'Question or extra context (optional)'}</label>
               <textarea id="question" value={question} onChange={event => setQuestion(event.target.value)} placeholder="What have you tried so far?" />
               <label htmlFor="screenshot">Screenshot of your current work</label>
+              {window.whatNowDesktop && <>
+                <button className="button secondary" type="button" onClick={() => void run(async () => {
+                  clearScreenshot();
+                  setSources([]);
+                  const captures = await window.whatNowDesktop!.captureSources();
+                  if (!captures.length) throw new Error('No screens or windows available. Check Screen Recording permissions and restart the app.');
+                  setSources(captures);
+                })}>Capture a screen or window</button>
+                <p className="upload-note">Capture previews stay on this device. Select one, review it, then submit to share it with Gemini.</p>
+              </>}
+              {sources.length > 0 && <div className="capture-picker" aria-label="Choose a captured screen or window">
+                {sources.map(source => <button type="button" key={source.id} onClick={() => void run(async () => {
+                  const bytes = Uint8Array.from(atob(source.image.split(',')[1]), char => char.charCodeAt(0));
+                  setScreenshot(new File([bytes], 'capture.png', { type: 'image/png' }));
+                  if (fileInput.current) fileInput.current.value = '';
+                  setSources([]);
+                })}><img src={source.image} alt="" /><span>{source.name}</span></button>)}
+                <button type="button" onClick={() => setSources([])}>Cancel capture</button>
+              </div>}
               <input ref={fileInput} id="screenshot" type="file" accept="image/png,image/jpeg,image/webp" onChange={event => {
+                setSources([]);
                 const file = event.target.files?.[0] ?? null;
                 if (file && !['image/png', 'image/jpeg', 'image/webp'].includes(file.type)) {
                   setError('Choose a PNG, JPEG, or WebP image.');
@@ -105,6 +126,7 @@ export function Session() {
                 }
               }} />
               {preview && <img className="screenshot-preview" src={preview} alt="Screenshot selected for your next hint request" />}
+              {screenshot && <button className="button secondary" type="button" onClick={clearScreenshot}>Discard screenshot</button>}
               <p className="upload-note">Choose a fresh screenshot for each check. More hints use the previous capture.</p>
             </>}
             <button className="button primary" type="submit" disabled={!!sessionId && !screenshot}>
@@ -114,6 +136,7 @@ export function Session() {
               await resetSession(sessionId, { signal });
               setQuestion('');
               setHint(null);
+              setSources([]);
               clearScreenshot();
               // Keep the ID until deletion succeeds so a failed cleanup can be retried.
               await deleteSession(sessionId, { signal });
@@ -123,7 +146,7 @@ export function Session() {
           </fieldset>
         </form>
         <div className="coach">
-          <div className="panel-bar"><span>✦ &nbsp; What Now</span><span>{hint ? `HINT ${hint.hint_level} / 3` : 'YOUR SESSION'}</span></div>
+          <div className="panel-bar"><span>✦ &nbsp; WhatNow</span><span>{hint ? `HINT ${hint.hint_level} / 3` : 'YOUR SESSION'}</span></div>
           <div className="response" role="status">
             {hint ? <>
               <h3>{hint.message}</h3>

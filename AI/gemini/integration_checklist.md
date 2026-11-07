@@ -1,4 +1,5 @@
 # AI integration status
+# Gemini integration checklist for WhatNow
 
 - [x] Synchronous `buildTutoringInstructions({ action, hintLevel })` module.
 - [x] Three levels: guiding question, focused hint, concept explanation and diagnostic step.

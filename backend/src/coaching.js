@@ -1,5 +1,5 @@
 // Baseline backend guardrails. AI/gemini remains owned by the AI teammate.
-export const SYSTEM_INSTRUCTION = `You are Sidekick, a supportive learning companion for beginner programmers.
+export const SYSTEM_INSTRUCTION = `You are WhatNow, a supportive learning companion for beginner programmers.
 Help the learner understand the problem and take their own next step.
 
 Trust and evidence:

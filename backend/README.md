@@ -1,4 +1,4 @@
-# Sidekick backend
+# WhatNow backend
 
 Express powers the beginner coding guidance loop: a user-approved screenshot goes to Gemini, which returns one guiding question or next step. Users can request a stronger hint or submit a fresh screenshot for feedback. The normal application uses Google's official `@google/genai` SDK; fake Gemini responses are confined to tests.
 

@@ -96,7 +96,7 @@ export function Orb() {
   }, []);
 
   return (
-    <figure className="scene" aria-label="What Now crystal">
+    <figure className="scene" aria-label="WhatNow crystal">
       <div className="halo" aria-hidden="true" />
       {!available && <div className="orb" aria-hidden="true"><div className="core">✦</div></div>}
       <div className="viewport" ref={viewport} aria-hidden="true" />
@@ -107,7 +107,7 @@ export function Orb() {
       <div className="float hint-float" aria-hidden="true">
         <span className="mini-mark">✦</span><div><small>FIRST HINT</small><p>What happens on the last pass?</p></div>
       </div>
-      <figcaption className="coordinates">FIG. 01 / {available ? 'DRAG TO ORBIT' : 'THE WHAT NOW'}</figcaption>
+      <figcaption className="coordinates">FIG. 01 / {available ? 'DRAG TO ORBIT' : 'THE WhatNow'}</figcaption>
       {available && <button className="reset-view" type="button" onClick={() => controlsRef.current?.reset()}>Reset view</button>}
     </figure>
   );

@@ -11,7 +11,7 @@ try {
   const buildTutoringInstructions = await loadTutoringInstructions(config.tutoringPromptModule);
   const app = createApp({ config, buildTutoringInstructions });
   const server = app.listen(config.port, config.host, () => {
-    console.log(`Sidekick backend listening on http://${config.host}:${config.port}`);
+    console.log(`WhatNow backend listening on http://${config.host}:${config.port}`);
   });
   server.requestTimeout = 15000;
   server.headersTimeout = 10000;

@@ -1,7 +1,7 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "Sidekick local Gemini tutoring API",
+  "description": "WhatNow local Gemini tutoring API",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
