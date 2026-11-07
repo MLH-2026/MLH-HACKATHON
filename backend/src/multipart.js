@@ -16,7 +16,7 @@ export function parseHintForm(req, config) {
         headers: req.headers,
         // Busboy emits these limit events at the threshold, so leave one slot/byte.
         // The explicit image and field validators enforce the public inclusive limits.
-        limits: { fileSize: config.maxImageBytes + 1, fields: 3, files: 1, parts: 5, fieldSize: 8192, fieldNameSize: 100 },
+        limits: { fileSize: config.maxImageBytes + 1, fields: 5, files: 1, parts: 7, fieldSize: 49152, fieldNameSize: 100 },
       });
     } catch {
       reject(new ApiError(422, 'invalid_multipart', 'Malformed multipart body.'));
@@ -24,7 +24,7 @@ export function parseHintForm(req, config) {
     }
     const fieldName = name => {
       if (seen.has(name)) fail('invalid_request', 422, 'Do not repeat multipart fields.');
-      if (!['session_id', 'action', 'question', 'screenshot'].includes(name)) fail('invalid_request', 422, 'Unknown multipart field.');
+      if (!['session_id', 'action', 'question', 'screenshot', 'context', 'restart_ladder'].includes(name)) fail('invalid_request', 422, 'Unknown multipart field.');
       seen.add(name);
     };
     parser.on('field', (name, value, info) => {

@@ -5,7 +5,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 test('floating controls work without page globals in the isolated preload world', async () => {
-  const elements = Object.fromEntries(['#open', '#pause', '#quit', '#state'].map(id => [id, {}]));
+  const elements = Object.fromEntries(['#edit', '#open', '#pause', '#quit', '#state'].map(id => [id, {}]));
   const calls = [];
   let ready;
   let paused = false;
@@ -26,11 +26,11 @@ test('floating controls work without page globals in the isolated preload world'
   ready();
   await elements['#open'].onclick();
   await elements['#pause'].onclick({ target: elements['#pause'] });
-  assert.equal(elements['#pause'].textContent, 'Resume capture');
+  assert.equal(elements['#pause'].textContent, 'Resume');
   assert.equal(elements['#state'].textContent, 'Capture paused');
   await elements['#pause'].onclick({ target: elements['#pause'] });
-  assert.equal(elements['#pause'].textContent, 'Pause capture');
-  assert.equal(elements['#state'].textContent, 'Capture only when you ask');
+  assert.equal(elements['#pause'].textContent, 'Pause');
+  assert.equal(elements['#state'].textContent, 'Click to capture & get help');
   await elements['#quit'].onclick();
   assert.deepEqual(calls, ['open-help', 'pause-capture', 'pause-capture', 'quit-desktop']);
 });

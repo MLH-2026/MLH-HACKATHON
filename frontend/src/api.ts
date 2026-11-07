@@ -1,6 +1,6 @@
 type HintRequest =
-  | { sessionId: string; action: 'initial' | 'check_again'; question?: string; screenshot: File }
-  | { sessionId: string; action: 'more_hint'; question?: string };
+  | { sessionId: string; action: 'initial' | 'check_again'; question?: string; context?: string; restartLadder?: boolean; screenshot: File }
+  | { sessionId: string; action: 'more_hint'; question?: string; context?: string };
 
 export interface HintResponse {
   hint_level: 1 | 2 | 3;
@@ -64,6 +64,8 @@ export async function requestHint(input: HintRequest, options: RequestOptions = 
   const body = new FormData();
   body.append('session_id', input.sessionId);
   body.append('action', input.action);
+  if (input.context?.trim()) body.append('context', input.context.trim());
+  if (input.action === 'check_again' && input.restartLadder) body.append('restart_ladder', 'true');
   if (input.question?.trim()) body.append('question', input.question.trim());
   if (input.action !== 'more_hint') {
     if (!(input.screenshot instanceof File) || input.screenshot.size === 0) {
@@ -84,10 +86,12 @@ export async function requestHint(input: HintRequest, options: RequestOptions = 
   return result as unknown as HintResponse;
 }
 
-export function resetSession(sessionId: string, options: RequestOptions = {}): Promise<unknown> {
+export function resetSession(sessionId: string, options: RequestOptions & { goal?: string } = {}): Promise<unknown> {
   if (!sessionId.trim()) throw new Error('Start a session before resetting it.');
   return request(`/session/${encodeURIComponent(sessionId)}/reset`, {
     method: 'POST',
+    headers: options.goal ? { 'Content-Type': 'application/json' } : undefined,
+    body: options.goal ? JSON.stringify({ goal: options.goal }) : undefined,
     signal: options.signal,
   });
 }

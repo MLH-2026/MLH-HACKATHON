@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 
 const sections = [
   { id: 'home', label: 'Home' },
+  { id: 'why', label: 'Why WhatNow' },
   { id: 'session', label: 'Get help' },
   { id: 'playground', label: 'Playground' },
 ];
@@ -10,6 +11,7 @@ export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const toggle = useRef<HTMLButtonElement>(null);
   const [activeSection, setActiveSection] = useState('home');
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     let frame = 0;
@@ -24,6 +26,8 @@ export function Header() {
         current = 'playground';
       }
       setActiveSection(current);
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      setProgress(max > 0 ? Math.min(1, window.scrollY / max) : 0);
     };
     const schedule = () => {
       cancelAnimationFrame(frame);
@@ -89,6 +93,7 @@ export function Header() {
           </a>
         </nav>
       </div>
+      <div className="progress" aria-hidden="true"><span style={{ transform: `scaleX(${progress})` }} /></div>
     </header>
   );
 }
