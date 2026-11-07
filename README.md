@@ -1,5 +1,17 @@
 # MLH Hackathon Resources — Fall Hacks 2026
 
+## Repository structure
+
+| Folder | Contents |
+| --- | --- |
+| `frontend/` | React, TypeScript, Three.js, styles, and Vite configuration. |
+| `backend/` | Backend ownership and planned Node.js API responsibilities. |
+| `AI/` | Gemini documentation and integration checklist. |
+| `desktop-integration/` | Electron and screen-capture integration responsibilities. |
+| `MLH_Hackathon_Resources/` | Shared event notes, project brief, build plan, and demo script. |
+
+The root package uses npm workspaces. Run installation and development commands from the repository root. The frontend is the implemented workspace today. Backend and desktop code can be added to their folders as those components are built.
+
 ## Sidekick frontend
 
 Sidekick is a beginner coding companion for the MLH hackathon. The welcome screen includes a draggable 3D crystal and an interactive Python debugging exercise. Change the loop bound, check your attempt, and reveal a guiding question, a hint, or a concept explanation as needed.
@@ -33,7 +45,7 @@ npm run build
 npm run preview
 ```
 
-The production files are generated in `dist/`. The playground simulates one Python exercise in the browser and uses scripted hints. It needs no API key or Python installation.
+The production files are generated in `frontend/dist/`. The playground simulates one Python exercise in the browser and uses scripted hints. It needs no API key or Python installation.
 
 A starter resource pack for **Fall Hacks 2026** and the **Sidekick** project.
 
@@ -41,15 +53,15 @@ A starter resource pack for **Fall Hacks 2026** and the **Sidekick** project.
 
 ## Contents
 
-- `01_Event_Info/` — event notes and organizer-resource links
-- `02_Gemini_API/` — official Gemini API documentation and an integration checklist
-- `03_Project_Sidekick/` — project brief, MVP scope, build plan, privacy principles, and demo outline
+- `MLH_Hackathon_Resources/01_Event_Info/` — event notes and organizer-resource links
+- `AI/gemini/` — official Gemini API documentation and an integration checklist
+- `MLH_Hackathon_Resources/03_Project_Sidekick/` — project brief, MVP scope, build plan, privacy principles, and demo outline
 
 ## Event overview
 
 The event theme discussed in this project is **Digital Side-kick**.
 
-The event notes in `01_Event_Info/event_notes.md` summarize details from the opening-ceremony material shared in this chat. Please confirm deadlines, team rules, and submission requirements against the latest official event instructions before relying on them.
+The event notes in `MLH_Hackathon_Resources/01_Event_Info/event_notes.md` summarize details from the opening-ceremony material shared in this chat. Please confirm deadlines, team rules, and submission requirements against the latest official event instructions before relying on them.
 
 ## Project overview: Sidekick
 
