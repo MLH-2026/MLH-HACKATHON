@@ -1,19 +1,19 @@
-# Sidekick
+# What Now
 
-**Tagline:** Your work. Your thinking. Your Sidekick.
+**Tagline:** Your work. Your thinking. What Now.
 
 ## Concept
-Sidekick is a small, always-available desktop companion that helps a user get unstuck without taking over the work. The user explicitly clicks a floating button, shares a screenshot, and receives contextual guidance.
+What Now is a small, always-available desktop companion that helps a user get unstuck without taking over the work. The user explicitly clicks a floating button, shares a screenshot, and receives contextual guidance.
 
 ## Target user / first use case
 Beginner programmers who are stuck while coding. Keep the hackathon MVP focused on coding rather than trying to support every task category.
 
 ## Core user flow
-1. User clicks the floating Sidekick button.
-2. Sidekick explains what it can inspect and asks for / uses explicit screen-capture permission.
+1. User clicks the floating What Now button.
+2. What Now explains what it can inspect and asks for / uses explicit screen-capture permission.
 3. User reviews or confirms the screenshot before sending.
 4. Gemini interprets the visible code, error, or IDE context.
-5. Sidekick provides a progressive hint ladder:
+5. What Now provides a progressive hint ladder:
    - Level 1: a guiding question.
    - Level 2: a more specific hint.
    - Level 3: a deeper explanation.
@@ -39,7 +39,7 @@ Beginner programmers who are stuck while coding. Keep the hackathon MVP focused 
 - Show a clear indication when a screenshot is being captured or analyzed.
 - Do not save screenshots by default.
 - Do not transmit screenshots in the background.
-- Let the user pause or close Sidekick at any time.
+- Let the user pause or close What Now at any time.
 - Never label users as lazy or infer personal traits from inactivity.
 
 ## Scope cuts for a reliable hackathon demo

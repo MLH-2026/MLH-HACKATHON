@@ -1,4 +1,4 @@
-# Sidekick — build plan
+# What Now — build plan
 
 ## Milestone 1: prove the technical path
 - Create a minimal Electron app.

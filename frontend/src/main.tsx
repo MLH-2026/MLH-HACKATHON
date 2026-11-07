@@ -56,7 +56,7 @@ function Playground() {
           <div className="terminal" role="status">{output || 'Starting bug · IndexError: list index out of range'}</div>
         </form>
         <div className="coach">
-          <div className="panel-bar"><span>✦ &nbsp; Sidekick</span><span>GUIDED DEMO</span></div>
+          <div className="panel-bar"><span>✦ &nbsp; What Now</span><span>GUIDED DEMO</span></div>
           <ol className="steps" aria-label="Hint levels">
             {['Question', 'Hint', 'Explain'].map((label, index) => (
               <li key={label} aria-current={index === level ? 'step' : undefined}>0{index + 1} {label}</li>
@@ -79,7 +79,7 @@ function App() {
   return (
     <>
       <header className="wrap top">
-        <a className="brand" href="./"><span className="mark" aria-hidden="true">✦</span> sidekick<span className="period">.</span></a>
+        <a className="brand" href="./"><span className="mark" aria-hidden="true">✦</span> what now<span className="period">.</span></a>
         <a className="nav-link" href="#playground">Hint playground <span aria-hidden="true">↗</span></a>
       </header>
       <main>
@@ -95,7 +95,7 @@ function App() {
         </section>
         <Playground />
       </main>
-      <footer className="wrap footer"><span>✦ &nbsp; SIDEKICK</span><span>MLH HACKATHON PROTOTYPE</span></footer>
+      <footer className="wrap footer"><span>✦ &nbsp; WHAT NOW</span><span>MLH HACKATHON PROTOTYPE</span></footer>
     </>
   );
 }

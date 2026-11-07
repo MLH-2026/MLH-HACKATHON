@@ -1,5 +1,5 @@
 {
-  "name": "sidekick",
+  "name": "what-now",
   "version": "0.1.0",
   "private": true,
   "workspaces": [
@@ -9,9 +9,9 @@
     "node": "^20.19.0 || >=22.12.0"
   },
   "scripts": {
-    "dev": "npm run dev --workspace=@sidekick/frontend",
-    "typecheck": "npm run typecheck --workspace=@sidekick/frontend",
-    "build": "npm run build --workspace=@sidekick/frontend",
-    "preview": "npm run preview --workspace=@sidekick/frontend"
+    "dev": "npm run dev --workspace=@what-now/frontend",
+    "typecheck": "npm run typecheck --workspace=@what-now/frontend",
+    "build": "npm run build --workspace=@what-now/frontend",
+    "preview": "npm run preview --workspace=@what-now/frontend"
   }
 }
