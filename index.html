@@ -1,67 +1,13 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Sidekick helps you get unstuck while learning to code, one hint at a time.">
-  <title>Sidekick — Find your next move</title>
-  <link rel="stylesheet" href="styles.css">
-  <script src="demo.js" defer></script>
-</head>
-<body>
-  <header class="wrap top">
-    <a class="brand" href="./"><span class="mark" aria-hidden="true">✦</span> sidekick<span class="period">.</span></a>
-    <a class="nav-link" href="#playground">Hint playground <span aria-hidden="true">↗</span></a>
-  </header>
-  <main>
-    <section class="hero wrap" aria-labelledby="welcome">
-      <div class="intro">
-        <div class="eyebrow"><span class="signal"></span> YOUR CODING COMPANION</div>
-        <h1 id="welcome">Find your<br><em>next move.</em></h1>
-        <p>Stuck on a line of code? Get a small, timely hint that helps you work through it yourself.</p>
-        <a class="button primary" href="#playground">Try the hint ladder <span aria-hidden="true">↗</span></a>
-        <div class="caption">01 / EXPLORE A SAMPLE BUG</div>
-      </div>
-      <div class="scene" aria-hidden="true">
-        <div class="halo"></div>
-        <div class="orbit orbit-a"></div><div class="orbit orbit-b"></div><div class="orbit orbit-c"></div>
-        <div class="orb"><div class="core">✦</div></div>
-        <div class="float code-float">
-          <div class="float-label"><i></i><i></i><i></i><span>practice.py</span></div>
-          <div class="float-code"><b>01</b> items = [<span>2, 4, 6</span>]<br><b>02</b> <strong>for</strong> i <strong>in</strong> range(4):<br><b>03</b> &nbsp; print(items[i])</div>
-        </div>
-        <div class="float hint-float"><span class="mini-mark">✦</span><div><small>FIRST HINT</small><p>What happens on the last pass?</p></div></div>
-        <span class="star star-a">+</span><span class="star star-b">✧</span><span class="star star-c">+</span>
-        <span class="coordinates">FIG. 01 &nbsp; / &nbsp; THE SIDEKICK</span>
-      </div>
-    </section>
-    <section class="playground wrap" id="playground" aria-labelledby="demo-title">
-      <div class="eyebrow"><span class="signal"></span> THE HINT PLAYGROUND</div>
-      <h2 id="demo-title">One bug. Three ways in.</h2>
-      <p class="section-copy">Try a sample Python error and reveal a little more help at each step.</p>
-      <div class="demo-grid">
-        <div class="editor">
-          <div class="panel-bar"><span>practice.py</span><span>PYTHON</span></div>
-          <pre><code>items = [2, 4, 6]
-<span class="syntax">for</span> i <span class="syntax">in</span> range(4):
-    print(items[i])</code></pre>
-          <div class="error">IndexError: list index out of range</div>
-        </div>
-        <div class="coach">
-          <div class="panel-bar"><span>✦ &nbsp; Sidekick</span><span>GUIDED DEMO</span></div>
-          <ol class="steps" aria-label="Hint levels">
-            <li>01 Question</li><li>02 Hint</li><li>03 Explain</li>
-          </ol>
-          <div class="response" role="status">
-            <h3 id="hint-title">Need a nudge?</h3>
-            <p id="hint-text">Start with a question about the loop.</p>
-          </div>
-          <button class="button primary" id="advance" type="button">I’m stuck</button>
-          <noscript><p>Enable JavaScript to reveal the sample hints.</p></noscript>
-        </div>
-      </div>
-    </section>
-  </main>
-  <footer class="wrap footer"><span>✦ &nbsp; SIDEKICK</span><span>MLH HACKATHON PROTOTYPE</span></footer>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Practice debugging with Sidekick, one hint at a time." />
+    <title>Sidekick — Find your next move</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>

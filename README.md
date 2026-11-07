@@ -1,5 +1,40 @@
 # MLH Hackathon Resources — Fall Hacks 2026
 
+## Sidekick frontend
+
+Sidekick is a beginner coding companion for the MLH hackathon. The welcome screen includes a draggable 3D crystal and an interactive Python debugging exercise. Change the loop bound, check your attempt, and reveal a guiding question, a hint, or a concept explanation as needed.
+
+### Run locally
+
+Install Node.js 22.12+ (or Node.js 20.19+ on the 20.x line), then run these commands from the repository root.
+
+```bash
+npm ci
+npm run dev
+```
+
+Open the local URL printed by Vite, usually `http://localhost:5173`.
+
+### Packages
+
+| Package | What it does |
+| --- | --- |
+| `react`, `react-dom` | Render the interface and manage the playground state. |
+| `three` | Render the WebGL crystal, lighting, and orbit rings. Its bundled OrbitControls handle dragging. |
+| `typescript` | Type-check the React app and scene. |
+| `vite`, `@vitejs/plugin-react` | Run the Node.js development server and build the frontend. |
+| `@types/react`, `@types/react-dom`, `@types/three` | Provide TypeScript declarations for the libraries. |
+
+### Build and preview
+
+```bash
+npm run typecheck
+npm run build
+npm run preview
+```
+
+The production files are generated in `dist/`. The playground simulates one Python exercise in the browser and uses scripted hints. It needs no API key or Python installation.
+
 A starter resource pack for **Fall Hacks 2026** and the **Sidekick** project.
 
 > **Sidekick:** Your work. Your thinking. Your Sidekick.
