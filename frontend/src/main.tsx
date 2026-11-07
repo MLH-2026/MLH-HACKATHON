@@ -1,6 +1,7 @@
 import { StrictMode, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Orb } from './Orb';
+import { Header } from './Header';
 import './styles.css';
 
 const hints = [
@@ -78,12 +79,9 @@ function Playground() {
 function App() {
   return (
     <>
-      <header className="wrap top">
-        <a className="brand" href="./"><span className="mark" aria-hidden="true">✦</span> what now<span className="period">.</span></a>
-        <a className="nav-link" href="#playground">Hint playground <span aria-hidden="true">↗</span></a>
-      </header>
-      <main>
-        <section className="hero wrap" aria-labelledby="welcome">
+      <Header />
+      <main id="main" tabIndex={-1}>
+        <section className="hero wrap" id="home" aria-labelledby="welcome">
           <div className="intro">
             <div className="eyebrow"><span className="signal" /> YOUR CODING COMPANION</div>
             <h1 id="welcome">Find your<br /><em>next move.</em></h1>
