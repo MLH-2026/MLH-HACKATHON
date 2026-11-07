@@ -5,11 +5,11 @@ contextBridge.exposeInMainWorld('launcher', {
   quit: () => ipcRenderer.invoke('quit-desktop'),
 });
 window.addEventListener('DOMContentLoaded', () => {
-  document.querySelector('#open').onclick = () => window.launcher.open();
+  document.querySelector('#open').onclick = () => ipcRenderer.invoke('open-help');
   document.querySelector('#pause').onclick = async event => {
-    const paused = await window.launcher.pause();
+    const paused = await ipcRenderer.invoke('pause-capture');
     event.target.textContent = paused ? 'Resume capture' : 'Pause capture';
     document.querySelector('#state').textContent = paused ? 'Capture paused' : 'Capture only when you ask';
   };
-  document.querySelector('#quit').onclick = () => window.launcher.quit();
+  document.querySelector('#quit').onclick = () => ipcRenderer.invoke('quit-desktop');
 });
