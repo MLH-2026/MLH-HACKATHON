@@ -57,7 +57,7 @@ Unknown or repeated multipart fields are rejected. Blank `question` values are t
 | `more_hint` | A successful `initial` exists | Increases by one, capped at `3` | Adds specificity and avoids repeating the last hint. |
 | `check_again` | A successful `initial` exists; fresh screenshot required | Unchanged | Compares visible changes and suggests one next step. |
 
-Calling `initial` on an active problem returns `409 problem_already_started`. Calling `more_hint` or `check_again` before a successful initial request returns `409 problem_not_started`. Reset the session first to start an unrelated problem without mixing context. At level 3, further hints stay at level 3; a full replacement solution is not the intended behavior.
+Calling `initial` on an active problem returns `409 problem_already_started`. Calling `more_hint` or `check_again` before a successful initial request returns `409 problem_not_started`. Reset the session first to start an unrelated problem without mixing context. At level 3, further hints stay at level 3; level 3 provides a full answer or corrected code when the available context supports it. Message length is limited to 6,000 characters.
 
 ```bash
 SESSION_ID='replace-with-your-session-id'

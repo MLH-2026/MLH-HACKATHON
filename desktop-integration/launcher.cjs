@@ -9,7 +9,7 @@ window.addEventListener('DOMContentLoaded', () => {
   document.querySelector('#pause').onclick = async event => {
     const paused = await ipcRenderer.invoke('pause-capture');
     event.target.textContent = paused ? 'Resume capture' : 'Pause capture';
-    document.querySelector('#state').textContent = paused ? 'Capture paused' : 'Capture only when you ask';
+    document.querySelector('#state').textContent = paused ? 'Capture paused' : 'Preview stays on your device';
   };
   document.querySelector('#quit').onclick = () => ipcRenderer.invoke('quit-desktop');
 });

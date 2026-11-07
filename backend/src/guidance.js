@@ -6,7 +6,7 @@ export const guidanceSchema = {
   required: ['observation', 'message', 'needs_more_context', 'context_question'],
   properties: {
     observation: { type: 'string', minLength: 1, maxLength: 1200 },
-    message: { type: 'string', minLength: 1, maxLength: 1600 },
+    message: { type: 'string', minLength: 1, maxLength: 6000 },
     needs_more_context: { type: 'boolean' },
     context_question: { anyOf: [{ type: 'string', maxLength: 500 }, { type: 'null' }] },
   },
@@ -17,7 +17,7 @@ export function validateGuidance(value) {
   if (!value || typeof value !== 'object' || Array.isArray(value)) fail();
   const keys = Object.keys(value);
   if (keys.length !== 4 || guidanceSchema.required.some(key => !Object.hasOwn(value, key))) fail();
-  for (const [field, max] of [['observation', 1200], ['message', 1600]]) {
+  for (const [field, max] of [['observation', 1200], ['message', 6000]]) {
     if (typeof value[field] !== 'string' || !value[field].trim() || value[field].trim().length > max) fail();
   }
   if (typeof value.needs_more_context !== 'boolean') fail();

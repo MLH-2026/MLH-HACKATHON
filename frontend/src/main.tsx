@@ -78,6 +78,9 @@ function Playground() {
 }
 
 function App() {
+  if (window.whatNowDesktop) {
+    return <main className="desktop-shell"><Session /></main>;
+  }
   return (
     <>
       <Header />

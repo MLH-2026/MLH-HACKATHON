@@ -30,7 +30,7 @@ test('floating controls work without page globals in the isolated preload world'
   assert.equal(elements['#state'].textContent, 'Capture paused');
   await elements['#pause'].onclick({ target: elements['#pause'] });
   assert.equal(elements['#pause'].textContent, 'Pause capture');
-  assert.equal(elements['#state'].textContent, 'Capture only when you ask');
+  assert.equal(elements['#state'].textContent, 'Preview stays on your device');
   await elements['#quit'].onclick();
   assert.deepEqual(calls, ['open-help', 'pause-capture', 'pause-capture', 'quit-desktop']);
 });

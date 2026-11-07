@@ -84,10 +84,12 @@ export async function requestHint(input: HintRequest, options: RequestOptions = 
   return result as unknown as HintResponse;
 }
 
-export function resetSession(sessionId: string, options: RequestOptions = {}): Promise<unknown> {
+export function resetSession(sessionId: string, options: RequestOptions & { goal?: string } = {}): Promise<unknown> {
   if (!sessionId.trim()) throw new Error('Start a session before resetting it.');
   return request(`/session/${encodeURIComponent(sessionId)}/reset`, {
     method: 'POST',
+    headers: options.goal ? { 'Content-Type': 'application/json' } : undefined,
+    body: options.goal ? JSON.stringify({ goal: options.goal }) : undefined,
     signal: options.signal,
   });
 }

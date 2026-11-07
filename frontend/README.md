@@ -31,7 +31,9 @@ For deployment, set `VITE_API_BASE_URL` in `frontend/.env.local` before building
 
 Each function accepts an optional second argument with an AbortSignal. The browser supplies the multipart Content-Type header and boundary.
 
-The Get help section creates a session from the goal, accepts PNG/JPEG/WebP screenshot uploads, and displays the observation, message, hint level, and any clarification question. More hint sends no image. Check again requires a newly selected screenshot after each successful hint. Start a new problem awaits reset and deletion before allowing a new goal and session. If deletion fails, the session ID is retained for retry.
+The desktop Get help workspace provides a local live preview, project overview and task fields, and three explicitly requested help levels. Draft context supports Undo/Redo and Cancel. Back/forward controls revisit saved replies without extra API calls.
+
+Updating saved context resets the same session with its new goal. Starting a new problem requires confirmation and deletes the old session. The browser version retains image input for testing and fallback use.
 
 Responses are validated against the supplied session and hint schemas. Backend error messages appear in the interface. Expired sessions return the form to session creation. The separate playground remains available as a scripted example.
 

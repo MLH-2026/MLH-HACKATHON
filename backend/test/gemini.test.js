@@ -109,7 +109,7 @@ for (const [name, payload] of [
   ['non-JSON text', 'not JSON'],
   ['missing fields', {}],
   ['blank message', { ...guidance, message: ' ' }],
-  ['oversized message', { ...guidance, message: 'x'.repeat(1601) }],
+  ['oversized message', { ...guidance, message: 'x'.repeat(6001) }],
   ['nonboolean context flag', { ...guidance, needs_more_context: 'false' }],
   ['missing clarification', { ...guidance, needs_more_context: true }],
   ['unexpected clarification', { ...guidance, context_question: 'Which language?' }],
@@ -221,7 +221,7 @@ test('actual SDK constructs multimodal JSON through an explicitly mocked fetch b
   assert.equal(body.generationConfig.responseMimeType, 'application/json');
   const schema = body.generationConfig.responseJsonSchema;
   assert.equal(schema.additionalProperties, false);
-  assert.equal(schema.properties.message.maxLength, 1600);
+  assert.equal(schema.properties.message.maxLength, 6000);
   assert.deepEqual(new Set(schema.required), new Set(Object.keys(guidance)));
 });
 

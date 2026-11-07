@@ -6,6 +6,7 @@ const path = require('node:path');
 let help, launcher, server, origin;
 let paused = false;
 let capturing = false;
+let offeredSources = new Set();
 const dist = path.resolve(__dirname, '../frontend/dist');
 
 function secureWindow(window) {
@@ -66,13 +67,13 @@ app.whenReady().then(async () => {
   launcher = new BrowserWindow({ width: 250, height: 205, x: area.x + area.width - 270, y: area.y + 30,
     frame: false, resizable: false, alwaysOnTop: true,
     webPreferences: { preload: path.join(__dirname, 'launcher.cjs'), contextIsolation: true, nodeIntegration: false, sandbox: true } });
-  help = new BrowserWindow({ width: 1100, height: 820, show: false, backgroundColor: '#0d1014',
+  help = new BrowserWindow({ width: Math.min(1180, area.width - 40), height: Math.min(820, area.height - 40), minWidth: 480, minHeight: 540, title: 'WhatNow', show: false, backgroundColor: '#0d1014',
     webPreferences: { preload: path.join(__dirname, 'preload.cjs'), contextIsolation: true, nodeIntegration: false, sandbox: true } });
   secureWindow(launcher);
   secureWindow(help);
   help.on('close', event => { if (!app.isQuitting) { event.preventDefault(); help.hide(); } });
   ipcMain.handle('open-help', event => { authorize(event, launcher); help.show(); help.focus(); });
-  ipcMain.handle('pause-capture', event => { authorize(event, launcher); paused = !paused; return paused; });
+  ipcMain.handle('pause-capture', event => { authorize(event, launcher); paused = !paused; help.webContents.send('capture-paused', paused); return paused; });
   ipcMain.handle('quit-desktop', event => { authorize(event, launcher); app.quit(); });
   ipcMain.handle('capture-sources', async event => {
     authorize(event, help);
@@ -80,14 +81,33 @@ app.whenReady().then(async () => {
     if (capturing) throw new Error('A capture is already in progress.');
     capturing = true;
     try {
-      const sources = await desktopCapturer.getSources({ types: ['screen', 'window'], thumbnailSize: { width: 1600, height: 1000 } });
+      const sources = await desktopCapturer.getSources({ types: ['screen', 'window'], thumbnailSize: { width: 480, height: 300 } });
       if (paused) throw new Error('Capture was paused.');
-      return sources.filter(source => !source.thumbnail.isEmpty()).map(source => ({
+      const choices = sources.filter(source => !source.thumbnail.isEmpty() && !['WhatNow', 'What Now', 'WhatNow — Find your next move'].includes(source.name));
+      offeredSources = new Set(choices.map(source => source.id));
+      return choices.map(source => ({
         id: source.id, name: source.name, image: source.thumbnail.toDataURL(),
       }));
     } catch (error) {
       if (paused) throw error;
       throw new Error('Could not capture. On macOS, enable Screen Recording for Electron in System Settings → Privacy & Security, then restart the desktop app.');
+    } finally { capturing = false; }
+  });
+  ipcMain.handle('capture-frame', async (event, sourceId) => {
+    authorize(event, help);
+    if (paused) throw new Error('Capture is paused. Resume from the floating control.');
+    if (!offeredSources.has(sourceId)) throw new Error('Choose a window again.');
+    if (capturing) throw new Error('Capture is busy. Try again.');
+    capturing = true;
+    try {
+      const sources = await desktopCapturer.getSources({
+        types: [sourceId.startsWith('screen:') ? 'screen' : 'window'],
+        thumbnailSize: { width: 1600, height: 1000 },
+      });
+      if (paused) throw new Error('Capture is paused.');
+      const source = sources.find(item => item.id === sourceId);
+      if (!source || source.thumbnail.isEmpty()) throw new Error('This window is unavailable. Reopen it or choose another window.');
+      return 'data:image/jpeg;base64,' + source.thumbnail.toJPEG(85).toString('base64');
     } finally { capturing = false; }
   });
   await launcher.loadFile(path.join(__dirname, 'launcher.html'));
