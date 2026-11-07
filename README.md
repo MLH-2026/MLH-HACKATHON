@@ -5,12 +5,12 @@
 | Folder | Contents |
 | --- | --- |
 | `frontend/` | React, TypeScript, Three.js, styles, and Vite configuration. |
-| `backend/` | Backend ownership and planned Node.js API responsibilities. |
+| `backend/` | Node/Express coaching API, Gemini integration, tests, and API contract. |
 | `AI/` | Gemini documentation and integration checklist. |
 | `desktop-integration/` | Electron and screen-capture integration responsibilities. |
 | `MLH_Hackathon_Resources/` | Shared event notes, project brief, build plan, and demo script. |
 
-The root package uses npm workspaces. Run installation and development commands from the repository root. The frontend is the implemented workspace today. Backend and desktop code can be added to their folders as those components are built.
+The root package uses npm workspaces for the frontend. The Node backend runs separately with `npm --prefix backend start`; see [backend setup](backend/README.md) and the [frontend API contract](backend/API.md). Desktop integration remains in its own folder.
 
 ## What Now frontend
 
@@ -18,7 +18,7 @@ What Now is a beginner coding companion for the MLH hackathon. The welcome scree
 
 ### Run locally
 
-Install Node.js 22.12+ (or Node.js 20.19+ on the 20.x line), then run these commands from the repository root.
+Install Node.js 22.12+, then run these commands from the repository root.
 
 ```bash
 npm ci
@@ -26,6 +26,15 @@ npm run dev
 ```
 
 Open the local URL printed by Vite, usually `http://localhost:5173`.
+For live guidance, set `GEMINI_API_KEY` in `backend/.env` and run the backend in a second terminal from the repository root.
+
+```bash
+npm --prefix backend ci
+npm --prefix backend start
+```
+
+Vite forwards `/api` requests to the backend at `http://127.0.0.1:8000`.
+
 
 ### Packages
 
@@ -45,7 +54,7 @@ npm run build
 npm run preview
 ```
 
-The production files are generated in `frontend/dist/`. The playground simulates one Python exercise in the browser and uses scripted hints. The Get help section connects to the local Python backend for live guidance. See [backend connection setup](frontend/README.md#backend-requests).
+The production files are generated in `frontend/dist/`. The playground simulates one Python exercise in the browser and uses scripted hints. The Get help section connects to the local Node/Express backend for live guidance. See [backend connection setup](frontend/README.md#backend-requests).
 
 A starter resource pack for **Fall Hacks 2026** and the **What Now** project.
 
@@ -77,11 +86,11 @@ The intended MVP flow is:
 
 The goal is to guide the user rather than immediately take over and provide a complete solution.
 
-## Suggested technology
+## Technology
 
 - **Desktop app:** Electron
 - **UI:** React
-- **Backend:** Node.js
+- **Backend:** Node.js + Express (see [setup and run instructions](backend/README.md))
 - **AI:** Google Gemini API with image input
 
 Keep the Gemini API key on the backend. Do not bundle it into the desktop client.

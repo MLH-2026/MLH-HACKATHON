@@ -91,3 +91,11 @@ export function resetSession(sessionId: string, options: RequestOptions = {}): P
     signal: options.signal,
   });
 }
+
+export function deleteSession(sessionId: string, options: RequestOptions = {}): Promise<unknown> {
+  if (!sessionId.trim()) throw new Error('Start a session before deleting it.');
+  return request(`/session/${encodeURIComponent(sessionId)}`, {
+    method: 'DELETE',
+    signal: options.signal,
+  });
+}

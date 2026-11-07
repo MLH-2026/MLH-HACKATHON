@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { ApiError, createSession, requestHint, resetSession } from './api';
+import { ApiError, createSession, deleteSession, requestHint, resetSession } from './api';
 import type { HintResponse } from './api';
 
 export function Session() {
@@ -112,11 +112,13 @@ export function Session() {
             </button>
             {sessionId && <button className="button secondary" type="button" onClick={() => void run(async signal => {
               await resetSession(sessionId, { signal });
-              setSessionId(null);
-              setGoal('');
               setQuestion('');
               setHint(null);
               clearScreenshot();
+              // Keep the ID until deletion succeeds so a failed cleanup can be retried.
+              await deleteSession(sessionId, { signal });
+              setSessionId(null);
+              setGoal('');
             })}>Start a new problem</button>}
           </fieldset>
         </form>
