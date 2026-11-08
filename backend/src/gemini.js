@@ -8,6 +8,27 @@ function timeoutError() {
   return new ApiError(504, 'gemini_timeout', 'Gemini took too long. Retry this action.');
 }
 
+// Only fixed labels and numeric metadata leave the gateway. Never log raw errors.
+function logFailure(error, request, started, timedOut = false, invalidResponse = false) {
+  const rawStatus = Number(error?.status);
+  const status = Number.isInteger(rawStatus) && rawStatus >= 400 && rawStatus <= 599 ? rawStatus : null;
+  const networkCodes = new Set(['ENOTFOUND', 'EAI_AGAIN', 'ECONNREFUSED', 'ECONNRESET', 'ETIMEDOUT', 'UND_ERR_CONNECT_TIMEOUT', 'UND_ERR_SOCKET']);
+  const networkCode = [error?.code, error?.cause?.code].find(code => networkCodes.has(code)) ?? null;
+  const category = invalidResponse ? 'invalid_response'
+    : timedOut || ['AbortError', 'TimeoutError'].includes(error?.name) || [408, 504].includes(status) ? 'timeout'
+    : error instanceof ApiError ? 'local_configuration'
+    : status === 429 ? 'rate_limit'
+    : [400, 401, 403, 404].includes(status) ? 'provider_configuration'
+    : status !== null && status >= 500 ? 'provider_failure'
+    : networkCode ? 'connection_failure' : 'unknown_upstream_failure';
+  console.warn('[WhatNow Gemini]', JSON.stringify({
+    category, status, networkCode,
+    action: ['initial', 'more_hint', 'check_again'].includes(request.action) ? request.action : 'unknown',
+    hintLevel: [1, 2, 3].includes(request.hintLevel) ? request.hintLevel : null,
+    elapsedMs: Date.now() - started,
+  }));
+}
+
 function imagePart(image) {
   return { inlineData: { mimeType: image.mimeType, data: image.data.toString('base64') } };
 }
@@ -40,6 +61,7 @@ export class GeminiGateway {
   }
 
   async generate(request) {
+    const started = Date.now();
     const context = {
       learning_goal: request.goal,
       supporting_context: request.supportingContext || null,
@@ -106,7 +128,8 @@ export class GeminiGateway {
         }, this.timeoutMs);
       });
       response = await Promise.race([
-        client.models.generateContent({
+        (async () => {
+          const payload = {
           model: this.model,
           contents: [{ role: 'user', parts }],
           config: {
@@ -120,10 +143,28 @@ export class GeminiGateway {
             abortSignal: controller.signal,
             httpOptions: { timeout: this.timeoutMs, retryOptions: { attempts: 1 } },
           },
-        }),
+          };
+          // Retry only an explicit provider 503, once, within the same deadline.
+          // SDK retries stay disabled, so requests never multiply invisibly.
+          for (let attempt = 0; attempt < 2; attempt++) {
+            if (controller.signal.aborted) throw timeoutError();
+            try {
+              return await client.models.generateContent(payload);
+            } catch (error) {
+              if (Number(error?.status) !== 503 || attempt === 1 || controller.signal.aborted) throw error;
+              console.warn('[WhatNow Gemini]', JSON.stringify({ category: 'retrying_provider_503', attempt: 2 }));
+              await new Promise(resolve => {
+                const done = () => { clearTimeout(delay); controller.signal.removeEventListener('abort', done); resolve(); };
+                const delay = setTimeout(done, 1000);
+                controller.signal.addEventListener('abort', done, { once: true });
+              });
+            }
+          }
+        })(),
         deadline,
       ]);
     } catch (error) {
+      logFailure(error, request, started, timedOut);
       if (timedOut || error?.name === 'AbortError' || error?.name === 'TimeoutError') {
         throw timeoutError();
       }
@@ -165,6 +206,7 @@ export class GeminiGateway {
         .join('');
       return validateGuidance(JSON.parse(text));
     } catch {
+      logFailure(null, request, started, false, true);
       throw new ApiError(
         502,
         'gemini_invalid_response',

@@ -253,3 +253,22 @@ test('actual SDK rate-limit failures make one attempt and expose no raw provider
   });
   assert.equal(attempts, 1);
 });
+
+
+test('explicit provider 503 is retried once before returning valid guidance', async () => {
+  let attempts = 0;
+  const { gateway, calls } = stubGateway(async () => {
+    if (++attempts === 1) throw Object.assign(new Error('private provider detail'), { status: 503 });
+    return response();
+  });
+  assert.deepEqual(await gateway.generate(requestData()), guidance);
+  assert.equal(calls.length, 2);
+});
+
+test('provider 503 retry is bounded to two total calls', async () => {
+  const { gateway, calls } = stubGateway(async () => {
+    throw Object.assign(new Error('private provider detail'), { status: 503 });
+  });
+  await assert.rejects(gateway.generate(requestData()), { code: 'gemini_unavailable' });
+  assert.equal(calls.length, 2);
+});

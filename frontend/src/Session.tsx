@@ -38,6 +38,7 @@ export function Session() {
   const [viewIndex, setViewIndex] = useState(0);
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState('');
+  const [capturePending, setCapturePending] = useState(false);
   const [dragging, setDragging] = useState(false);
   const [paused, setPaused] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -87,7 +88,9 @@ export function Session() {
         void desktop.setBusy(false);
         return;
       }
-      live.current.getHint(live.current.hasHistory ? 'check_again' : 'initial', frame);
+      setCapturePending(true);
+      setError('');
+      void desktop.setBusy(false);
     });
     const stopPaused = desktop.onPaused(setPaused);
     return () => { stopNudge(); stopPaused(); };
@@ -138,6 +141,7 @@ export function Session() {
         // A fresh check starts the ladder again at level one but keeps earlier replies.
         result = await requestHint({ sessionId: id, action, question: note, context, screenshot: image, restartLadder: action === 'check_again' && hasHistory }, { signal });
       }
+      setCapturePending(false);
       setHistory(previous => [...previous, result]);
       setViewIndex(length);
       setQuestion('');
@@ -188,9 +192,11 @@ export function Session() {
                 : <div className="preview-empty"><span aria-hidden="true">▣</span><h3>Nothing captured yet.</h3><p>Press <strong>Nudge me</strong> on the floating control, or capture from here. Your screen is only captured when you ask.</p></div>}
             </div>
             <div className="preview-controls">
-              <button className="button secondary" disabled={busy || paused || step !== 'help' || !sessionId} onClick={captureNow}>📸 {latest ? 'Check my latest work' : 'Capture my screen'}</button>
+              <button className="button secondary" disabled={busy || paused || step !== 'help' || !sessionId} onClick={captureNow}>📸 {file ? 'Retake screenshot' : 'Capture my screen'}</button>
+              {capturePending && <button className="button primary" disabled={busy || !sessionId} onClick={() => getHint(latest ? 'check_again' : 'initial')}>Use this screenshot</button>}
               <button className="text-button" disabled={busy} onClick={() => void desktop.minimize()}>Shrink to corner</button>
             </div>
+            {capturePending && <p className="preview-note" role="status">Review your screenshot. Retake it or select Use this screenshot to send it for help.</p>}
             {paused && <p className="preview-note">Capture is paused from the floating control. Resume there to continue.</p>}
             <p className="preview-note">Captures stay in memory and are never saved to disk. A frame is only sent to Gemini when you ask for help.</p>
           </> : <div className="session-form">
